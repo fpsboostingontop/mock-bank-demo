@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DemoBank — Mock UI (DEMO ONLY)</title>
+  <style>
+    /* Minimal modern styling for a clean mock banking UI */
+    :root{--bg:#f4f7fb;--card:#ffffff;--muted:#6b7280;--accent:#0ea5a4;--danger:#ef4444}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{margin:0;background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);padding:36px}
+    .wrap{max-width:980px;margin:0 auto}
+    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    .title{font-size:18px;font-weight:600}
+    .demo-badge{background:#111827;color:white;padding:8px 12px;border-radius:999px;font-weight:700;letter-spacing:0.6px}
+
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 8px 30px rgba(15,23,42,0.06)}
+
+    .balance{font-size:28px;font-weight:700;margin-top:6px}
+    .meta{color:var(--muted);font-size:13px;margin-top:6px}
+
+    .actions{display:flex;gap:10px;margin-top:14px}
+    .btn{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-ghost{background:#f3f4f6;color:#111827}
+
+    .transactions{margin-top:12px}
+    .tx{display:flex;justify-content:space-between;padding:10px;border-radius:10px}
+    .tx + .tx{margin-top:8px}
+    .tx .left{display:flex;gap:10px;align-items:center}
+    .avatar{width:40px;height:40px;border-radius:10px;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-weight:700;color:#084e55}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* right column */
+    .account{display:flex;flex-direction:column;gap:12px}
+    .account .item{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px}
+    .pill{background:#f8fafc;padding:8px 10px;border-radius:999px;font-weight:700}
+
+    /* watermark */
+    .watermark{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-18deg);font-size:44px;color:rgba(17,24,39,0.06);font-weight:800;pointer-events:none;user-select:none}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* mobile */
+    @media (max-width:880px){
+      .grid{grid-template-columns:1fr;}
+      .account{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark">DEMO — NOT REAL</div>
+  <div class="wrap">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">DB</div>
+        <div>
+          <div class="title">DemoBank</div>
+          <div class="small">Fictional banking UI — for demo/video use only</div>
+        </div>
+      </div>
+      <div class="demo-badge">DEMO</div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="small">Available balance</div>
+              <div id="balance" class="balance">$0.00</div>
+              <div class="meta">Account • **** 1234</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">Primary</div>
+              <div class="pill">Checking</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" onclick="animateTo(5234.12)">Show $5,234.12</button>
+            <button class="btn btn-ghost" onclick="animateTo(1234567.89)">Show $1,234,567.89</button>
+            <button class="btn" onclick="animateTo(42.5)">Show $42.50</button>
+          </div>
+
+          <div class="transactions">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="small">Recent activity</div>
+              <div class="small">See all</div>
+            </div>
+
+            <div class="tx">
+              <div class="left">
+                <div class="avatar">AM</div>
+                <div>
+                  <div style="font-weight:700">Amazon</div>
+                  <div class="small">Sep 24</div>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:700">-$79.23</div>
+                <div class="small">Card • **** 1234</div>
+              </div>
+            </div>
+
+            <div class="tx">
+              <div class="left">
+                <div class="avatar">UB</div>
+                <div>
+                  <div style="font-weight:700">Uber</div>
+                  <div class="small">Sep 23</div>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:700">-$15.60</div>
+                <div class="small">Card • **** 1234</div>
+              </div>
+            </div>
+
+            <div class="tx">
+              <div class="left">
+                <div class="avatar">PY</div>
+                <div>
+                  <div style="font-weight:700">Paycheck</div>
+                  <div class="small">Sep 20</div>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:700">+$2,400.00</div>
+                <div class="small">Direct deposit</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <footer>
+          This is a fictional, demo-only UI. Do not use for real transactions or to mislead anyone.
+        </footer>
+      </div>
+
+      <aside class="account card">
+        <div style="font-weight:700">Account details</div>
+        <div class="item">
+          <div>
+            <div class="small">Account holder</div>
+            <div style="font-weight:700">A. Mockuser</div>
+          </div>
+          <div class="small">Verified</div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="small">Routing</div>
+            <div style="font-weight:700">000000000</div>
+          </div>
+          <div class="pill">Fictional</div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="small">IBAN / SWIFT</div>
+            <div style="font-weight:700">N/A</div>
+          </div>
+          <div class="small">Demo only</div>
+        </div>
+
+        <div style="margin-top:8px">
+          <div class="small">Playback controls</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" onclick="playSequence()">Play demo sequence</button>
+            <button class="btn" onclick="resetDemo()">Reset</button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // small helper: animate number counting to the target value
+    function formatMoney(n){
+      return n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+    }
+    let current = 0;
+    let animHandle = null;
+    function animateTo(target){
+      if(animHandle) cancelAnimationFrame(animHandle);
+      const start = performance.now();
+      const from = current;
+      const dur = 800;
+      function step(ts){
+        const t = Math.min(1,(ts-start)/dur);
+        const eased = t<.5 ? 2*t*t : -1+ (4-2*t)*t; // simple ease
+        current = from + (target-from)*eased;
+        document.getElementById('balance').textContent = formatMoney(Math.round(current*100)/100);
+        if(t<1) animHandle = requestAnimationFrame(step);
+        else animHandle = null;
+      }
+      animHandle = requestAnimationFrame(step);
+    }
+
+    // demo sequence: show multiple balances over time
+    let seqTimeouts = [];
+    function playSequence(){
+      clearSequence();
+      const seq = [5234.12, 42.50, 1234567.89, 98765.43];
+      let delay = 0;
+      seq.forEach((v,i)=>{
+        const t = setTimeout(()=>animateTo(v), delay);
+        seqTimeouts.push(t);
+        delay += 1400;
+      });
+    }
+    function clearSequence(){
+      seqTimeouts.forEach(t=>clearTimeout(t)); seqTimeouts = [];
+    }
+    function resetDemo(){ clearSequence(); animateTo(0); }
+
+    // initialize with a pleasant default
+    animateTo(5234.12);
+  </script>
+</body>
+</html>
