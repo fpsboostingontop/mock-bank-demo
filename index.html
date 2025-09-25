@@ -5,61 +5,188 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tatra Banka</title>
   <style>
-    :root{
-      --bg:#f4f6fa;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#002c5f; /* Tatra banka dark blue */
+    :root {
+      --bg:#0a0a0a;
+      --card:#0d1b2a; /* matte dark blue */
+      --accent:#00a3e0; /* Tatra banka cyan */
+      --muted:#9ca3af;
+      --text:#f5f5f5;
     }
-    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    body{margin:0;background:var(--bg);padding:36px}
-    .wrap{max-width:980px;margin:0 auto}
-    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:22px;letter-spacing:1px}
-    .title{font-size:20px;font-weight:700;color:var(--accent)}
+    * { box-sizing:border-box; font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial; }
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
 
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+    /* top navigation */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 36px;
+      background:#0f0f0f;
+      box-shadow:0 2px 8px rgba(0,0,0,0.6);
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+    }
+    .nav-links a {
+      color:var(--text);
+      text-decoration:none;
+      font-weight:500;
+      font-size:14px;
+      transition:color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color:var(--accent);
+    }
+    .profile {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .profile img {
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid var(--accent);
+    }
 
-    .balance{font-size:32px;font-weight:700;margin-top:6px;color:var(--accent)}
-    .meta{color:var(--muted);font-size:13px;margin-top:6px}
+    .wrap {
+      max-width:980px;
+      margin:0 auto;
+      padding:36px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
 
-    .transactions{margin-top:12px}
-    .tx{display:flex;justify-content:space-between;padding:10px;border-radius:10px;background:#f9fafb}
-    .tx + .tx{margin-top:8px}
-    .tx .left{display:flex;gap:10px;align-items:center}
-    .avatar{width:40px;height:40px;border-radius:10px;background:#e3e8f0;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
-    .small{font-size:13px;color:var(--muted)}
+    .grid {
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:18px;
+    }
 
-    .account{display:flex;flex-direction:column;gap:12px}
-    .account .item{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px;background:#f9fafb}
-    .pill{background:#eef2f8;padding:8px 10px;border-radius:999px;font-weight:700;color:var(--accent)}
+    .card {
+      background:var(--card);
+      padding:20px;
+      border-radius:14px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.4);
+    }
 
-    footer{margin-top:18px;color:var(--muted);font-size:12px;text-align:center}
+    .balance {
+      font-size:32px;
+      font-weight:700;
+      margin-top:6px;
+      color:var(--accent);
+    }
+    .meta { color:var(--muted); font-size:13px; margin-top:6px; }
 
-    @media (max-width:880px){
-      .grid{grid-template-columns:1fr;}
-      .account{order:2}
+    .transactions { margin-top:16px; }
+    .tx {
+      display:flex;
+      justify-content:space-between;
+      padding:12px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+    }
+    .tx + .tx { margin-top:8px; }
+    .tx .left { display:flex; gap:10px; align-items:center; }
+    .avatar {
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      background:#14273b;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:var(--accent);
+    }
+    .small { font-size:13px; color:var(--muted); }
+
+    .account {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .account .item {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+    }
+    .pill {
+      background:rgba(0,163,224,0.1);
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:700;
+      color:var(--accent);
+    }
+
+    /* savings progress bar */
+    .progress-container {
+      background:#1a2a3d;
+      border-radius:8px;
+      overflow:hidden;
+      height:12px;
+      margin-top:6px;
+    }
+    .progress-bar {
+      background:var(--accent);
+      height:100%;
+      width:75%; /* adjust as needed */
+    }
+
+    footer {
+      margin-top:18px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+      padding-bottom:20px;
+    }
+
+    @media (max-width:880px) {
+      .grid { grid-template-columns:1fr; }
+      .account { order:2; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <div class="brand">
-        <div class="logo">TB</div>
-        <div class="title">Tatra Banka</div>
-      </div>
-    </div>
 
+  <div class="navbar">
+    <div class="brand" style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:20px;font-weight:700;color:var(--accent)">Tatra Banka</div>
+    </div>
+    <div class="nav-links">
+      <a href="#">Domov</a>
+      <a href="#">Platby</a>
+      <a href="#">Karty</a>
+      <a href="#">Účty</a>
+    </div>
+    <div class="profile">
+      <span class="small">Enirco B.</span>
+      <img src="https://i.pravatar.cc/150?img=32" alt="profil">
+    </div>
+  </div>
+
+  <div class="wrap">
     <div class="grid">
       <div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div>
               <div class="small">Dostupný zostatok</div>
-              <div id="balance" class="balance">129 241,00 €</div>
+              <div class="balance">129 241,00 €</div>
               <div class="meta">Účet • 7728 4321</div>
             </div>
             <div style="text-align:right">
@@ -69,9 +196,9 @@
           </div>
 
           <div class="transactions">
-            <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
               <div class="small">Posledné transakcie</div>
-              <div class="small">Zobraziť všetky</div>
+              <div class="small" style="cursor:pointer;color:var(--accent)">Zobraziť všetky</div>
             </div>
 
             <div class="tx">
@@ -125,16 +252,15 @@
                 </div>
               </div>
               <div style="text-align:right">
-                <div style="font-weight:700">+40,00 €</div>
+                <div style="font-weight:700;color:#4ade80;">+40,00 €</div>
                 <div class="small">Pripísané</div>
               </div>
             </div>
-
           </div>
         </div>
 
         <footer>
-          Tatra Bank.
+          © 2025 Tatra Banka – Mock UI for learning purposes
         </footer>
       </div>
 
@@ -150,20 +276,22 @@
         </div>
 
         <div class="item">
-          <div>
+          <div style="width:100%">
             <div class="small">Úspory</div>
-            <div style="font-weight:700;color:var(--accent)">320 540,00 €</div>
+            <div style="font-weight:700;color:var(--accent);margin-bottom:4px;">320 540,00 €</div>
+            <div class="progress-container">
+              <div class="progress-bar"></div>
+            </div>
           </div>
         </div>
 
         <div class="item">
           <div>
             <div class="small">IBAN</div>
-            <div style="font-weight:700">SK00 0000 0000 0000 0000 0000</div>
+            <div style="font-weight:700">SK45 1200 0000 1234 5678 9012</div>
           </div>
           <div class="small">Tatra Banka</div>
         </div>
-
       </aside>
     </div>
   </div>
